@@ -91,21 +91,21 @@ impl Options<Arg> for Settings {
 
 #[test]
 fn noarg() {
-    let (settings, operands) = Settings::default().parse(["date"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["date"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(settings.chosen_format, Format::Unspecified);
 }
 
 #[test]
 fn iso_short_noarg() {
-    let (settings, operands) = Settings::default().parse(["date", "-I"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["date", "-I"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(settings.chosen_format, Format::Iso8601(Iso8601Format::Date));
 }
 
 #[test]
 fn iso_short_arg_direct_date() {
-    let (settings, operands) = Settings::default().parse(["date", "-Idate"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["date", "-Idate"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(settings.chosen_format, Format::Iso8601(Iso8601Format::Date));
 }
@@ -113,14 +113,15 @@ fn iso_short_arg_direct_date() {
 #[test]
 fn iso_short_arg_equal_date() {
     // Not accepted by GNU, but we want to accept it.
-    let (settings, operands) = Settings::default().parse(["date", "-I=date"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["date", "-I=date"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(settings.chosen_format, Format::Iso8601(Iso8601Format::Date));
 }
 
 #[test]
 fn iso_short_arg_space_date() {
-    let (settings, operands) = Settings::default().parse(["date", "-I", "date"]).unwrap();
+    let (settings, _bin_path, operands) =
+        Settings::default().parse(["date", "-I", "date"]).unwrap();
     // Must not be interpreted as an argument to "-I".
     assert_eq!(operands, vec!["date"]);
     assert_eq!(settings.chosen_format, Format::Iso8601(Iso8601Format::Date));
@@ -128,7 +129,7 @@ fn iso_short_arg_space_date() {
 
 #[test]
 fn iso_short_arg_direct_minutes() {
-    let (settings, operands) = Settings::default().parse(["date", "-Iminutes"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["date", "-Iminutes"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings.chosen_format,
@@ -139,7 +140,8 @@ fn iso_short_arg_direct_minutes() {
 #[test]
 fn iso_short_arg_equal_minutes() {
     // Not accepted by GNU, but we want to accept it.
-    let (settings, operands) = Settings::default().parse(["date", "-I=minutes"]).unwrap();
+    let (settings, _bin_path, operands) =
+        Settings::default().parse(["date", "-I=minutes"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings.chosen_format,
@@ -149,7 +151,7 @@ fn iso_short_arg_equal_minutes() {
 
 #[test]
 fn iso_short_arg_space_minutes() {
-    let (settings, operands) = Settings::default()
+    let (settings, _bin_path, operands) = Settings::default()
         .parse(["date", "-I", "minutes"])
         .unwrap();
     // Must not be interpreted as an argument to "-I".
@@ -175,7 +177,7 @@ fn iso_short_arg_invalid() {
 
 #[test]
 fn iso_short_arg_equal_hours() {
-    let (settings, operands) = Settings::default().parse(["date", "-I=hours"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["date", "-I=hours"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings.chosen_format,
@@ -185,7 +187,8 @@ fn iso_short_arg_equal_hours() {
 
 #[test]
 fn iso_short_arg_equal_seconds() {
-    let (settings, operands) = Settings::default().parse(["date", "-I=seconds"]).unwrap();
+    let (settings, _bin_path, operands) =
+        Settings::default().parse(["date", "-I=seconds"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings.chosen_format,
@@ -195,14 +198,14 @@ fn iso_short_arg_equal_seconds() {
 
 #[test]
 fn iso_short_arg_equal_ns() {
-    let (settings, operands) = Settings::default().parse(["date", "-I=ns"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["date", "-I=ns"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(settings.chosen_format, Format::Iso8601(Iso8601Format::Ns));
 }
 
 #[test]
 fn iso_short_arg_equal_hour_singular() {
-    let (settings, operands) = Settings::default().parse(["date", "-I=hour"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["date", "-I=hour"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings.chosen_format,
@@ -212,7 +215,7 @@ fn iso_short_arg_equal_hour_singular() {
 
 #[test]
 fn iso_short_arg_equal_second_singular() {
-    let (settings, operands) = Settings::default().parse(["date", "-I=second"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["date", "-I=second"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings.chosen_format,
@@ -222,7 +225,7 @@ fn iso_short_arg_equal_second_singular() {
 
 #[test]
 fn iso_short_arg_equal_minute_singular() {
-    let (settings, operands) = Settings::default().parse(["date", "-I=minute"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["date", "-I=minute"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings.chosen_format,
@@ -232,21 +235,22 @@ fn iso_short_arg_equal_minute_singular() {
 
 #[test]
 fn iso_short_arg_equal_n_singular() {
-    let (settings, operands) = Settings::default().parse(["date", "-I=n"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["date", "-I=n"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(settings.chosen_format, Format::Iso8601(Iso8601Format::Ns));
 }
 
 #[test]
 fn iso_long_noarg() {
-    let (settings, operands) = Settings::default().parse(["date", "--iso-8601"]).unwrap();
+    let (settings, _bin_path, operands) =
+        Settings::default().parse(["date", "--iso-8601"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(settings.chosen_format, Format::Iso8601(Iso8601Format::Date));
 }
 
 #[test]
 fn iso_long_equal_date() {
-    let (settings, operands) = Settings::default()
+    let (settings, _bin_path, operands) = Settings::default()
         .parse(["date", "--iso-8601=date"])
         .unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
@@ -255,7 +259,7 @@ fn iso_long_equal_date() {
 
 #[test]
 fn iso_long_equal_hour() {
-    let (settings, operands) = Settings::default()
+    let (settings, _bin_path, operands) = Settings::default()
         .parse(["date", "--iso-8601=hour"])
         .unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
@@ -267,7 +271,7 @@ fn iso_long_equal_hour() {
 
 #[test]
 fn iso_long_space_hour() {
-    let (settings, operands) = Settings::default()
+    let (settings, _bin_path, operands) = Settings::default()
         .parse(["date", "--iso-8601", "hour"])
         .unwrap();
     // Must not be interpreted as an argument to "-I".
@@ -277,7 +281,8 @@ fn iso_long_space_hour() {
 
 #[test]
 fn iso_long_equal_n() {
-    let (settings, operands) = Settings::default().parse(["date", "--iso-8601=n"]).unwrap();
+    let (settings, _bin_path, operands) =
+        Settings::default().parse(["date", "--iso-8601=n"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(settings.chosen_format, Format::Iso8601(Iso8601Format::Ns));
 }
@@ -298,7 +303,7 @@ fn rfc3339_noarg() {
 
 #[test]
 fn rfc3339_equal_date() {
-    let (settings, operands) = Settings::default()
+    let (settings, _bin_path, operands) = Settings::default()
         .parse(["date", "--rfc-3339=date"])
         .unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
@@ -307,7 +312,7 @@ fn rfc3339_equal_date() {
 
 #[test]
 fn rfc3339_equal_ns() {
-    let (settings, operands) = Settings::default()
+    let (settings, _bin_path, operands) = Settings::default()
         .parse(["date", "--rfc-3339=ns"])
         .unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
@@ -316,7 +321,8 @@ fn rfc3339_equal_ns() {
 
 #[test]
 fn rfc3339_equal_n_singular() {
-    let (settings, operands) = Settings::default().parse(["date", "--rfc-3339=n"]).unwrap();
+    let (settings, _bin_path, operands) =
+        Settings::default().parse(["date", "--rfc-3339=n"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(settings.chosen_format, Format::Rfc3339(Rfc3339Format::Ns));
 }
@@ -338,7 +344,7 @@ fn rfc3339_equal_minutes() {
 
 #[test]
 fn rfc3339_space_date() {
-    let (settings, operands) = Settings::default()
+    let (settings, _bin_path, operands) = Settings::default()
         .parse(["date", "--rfc-3339", "date"])
         .unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
@@ -347,7 +353,7 @@ fn rfc3339_space_date() {
 
 #[test]
 fn rfc3339_space_ns() {
-    let (settings, operands) = Settings::default()
+    let (settings, _bin_path, operands) = Settings::default()
         .parse(["date", "--rfc-3339", "ns"])
         .unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
@@ -356,7 +362,7 @@ fn rfc3339_space_ns() {
 
 #[test]
 fn rfc3339_space_n_singular() {
-    let (settings, operands) = Settings::default()
+    let (settings, _bin_path, operands) = Settings::default()
         .parse(["date", "--rfc-3339", "n"])
         .unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
@@ -380,14 +386,15 @@ fn rfc3339_space_minutes() {
 
 #[test]
 fn rfc_email_short() {
-    let (settings, operands) = Settings::default().parse(["date", "-R"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["date", "-R"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(settings.chosen_format, Format::RfcEmail);
 }
 
 #[test]
 fn rfc_email_long() {
-    let (settings, operands) = Settings::default().parse(["date", "--rfc-email"]).unwrap();
+    let (settings, _bin_path, operands) =
+        Settings::default().parse(["date", "--rfc-email"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(settings.chosen_format, Format::RfcEmail);
 }
@@ -597,7 +604,7 @@ fn rfc_clash_rfcemailshort_rfcemaillong() {
 #[test]
 #[ignore = "exits too early, but works correctly"]
 fn default_show_help() {
-    let (settings, operands) = Settings::default().parse(&["date", "--help"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(&["date", "--help"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(settings.chosen_format, Format::Unspecified);
 }
@@ -605,7 +612,7 @@ fn default_show_help() {
 #[test]
 #[ignore = "BROKEN, exits too early"]
 fn rfcemail_show_help() {
-    let (settings, operands) = Settings::default()
+    let (settings, _bin_path, operands) = Settings::default()
         .parse(&["date", "-R", "--help"])
         .unwrap();
     assert_eq!(operands, Vec::<OsString>::new());

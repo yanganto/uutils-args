@@ -45,7 +45,7 @@ impl Options<Arg> for Settings {
 
 #[test]
 fn noarg() {
-    let (settings, operands) = Settings::default().parse(["du"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["du"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings,
@@ -58,7 +58,7 @@ fn noarg() {
 
 #[test]
 fn bytes() {
-    let (settings, operands) = Settings::default().parse(["du", "-b"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["du", "-b"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings,
@@ -71,7 +71,7 @@ fn bytes() {
 
 #[test]
 fn kibibytes() {
-    let (settings, operands) = Settings::default().parse(["du", "-k"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["du", "-k"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings,
@@ -84,7 +84,7 @@ fn kibibytes() {
 
 #[test]
 fn bytes_kibibytes() {
-    let (settings, operands) = Settings::default().parse(["du", "-bk"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["du", "-bk"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings,
@@ -97,7 +97,7 @@ fn bytes_kibibytes() {
 
 #[test]
 fn kibibytes_bytes() {
-    let (settings, operands) = Settings::default().parse(["du", "-kb"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["du", "-kb"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings,
@@ -110,7 +110,7 @@ fn kibibytes_bytes() {
 
 #[test]
 fn apparent_size() {
-    let (settings, operands) = Settings::default()
+    let (settings, _bin_path, operands) = Settings::default()
         .parse(["du", "--apparent-size"])
         .unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
@@ -125,7 +125,7 @@ fn apparent_size() {
 
 #[test]
 fn mibibytes() {
-    let (settings, operands) = Settings::default().parse(["du", "-m"]).unwrap();
+    let (settings, _bin_path, operands) = Settings::default().parse(["du", "-m"]).unwrap();
     assert_eq!(operands, Vec::<OsString>::new());
     assert_eq!(
         settings,
@@ -138,7 +138,7 @@ fn mibibytes() {
 
 #[test]
 fn all() {
-    let (settings, operands) = Settings::default()
+    let (settings, _bin_path, operands) = Settings::default()
         .parse(["du", "--apparent-size", "-bkm", "-B123"])
         .unwrap();
     assert_eq!(operands, Vec::<OsString>::new());

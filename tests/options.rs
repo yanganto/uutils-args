@@ -301,7 +301,7 @@ fn actions() {
         }
     }
 
-    let (settings, _operands) = Settings::default()
+    let (settings, _bin_path, _operands) = Settings::default()
         .parse(["test", "-m=Hello", "-m=World", "--send"])
         .unwrap();
     assert_eq!(settings.messages, vec!["Hello", "World"]);
@@ -522,13 +522,14 @@ fn mktemp_tmpdir() {
         }
     }
 
-    let (settings, _operands) = Settings::default().parse(["test", "-p", "X"]).unwrap();
+    let (settings, _bin_path, _operands) = Settings::default().parse(["test", "-p", "X"]).unwrap();
     assert_eq!(settings.tmpdir.unwrap(), "X");
 
-    let (settings, _operands) = Settings::default().parse(["test", "--tmpdir=X"]).unwrap();
+    let (settings, _bin_path, _operands) =
+        Settings::default().parse(["test", "--tmpdir=X"]).unwrap();
     assert_eq!(settings.tmpdir.unwrap(), "X");
 
-    let (settings, _operands) = Settings::default().parse(["test", "--tmpdir"]).unwrap();
+    let (settings, _bin_path, _operands) = Settings::default().parse(["test", "--tmpdir"]).unwrap();
     assert_eq!(settings.tmpdir.unwrap(), "/tmp");
 
     assert!(Settings::default().parse(["test", "-p"]).is_err());

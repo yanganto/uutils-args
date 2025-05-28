@@ -34,6 +34,6 @@ impl Options<Arg> for Settings {
 }
 
 fn main() {
-    let (settings, _operands) = Settings::default().parse(std::env::args_os()).unwrap();
+    let (settings, _bin_path, _operands) = Settings::default().parse(std::env::args_os()).unwrap();
     println!("{:?}", settings.color);
 }

@@ -179,7 +179,7 @@ fn files() {
         Settings::default()
             .parse(["b2sum", "foo", "bar"])
             .unwrap()
-            .1,
+            .2,
         vec![OsString::from("foo"), OsString::from("bar")]
     );
 }

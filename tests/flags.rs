@@ -22,7 +22,7 @@ fn one_flag() {
         }
     }
 
-    let (settings, _) = Settings::default().parse(["test", "-f"]).unwrap();
+    let (settings, _, _) = Settings::default().parse(["test", "-f"]).unwrap();
     assert!(settings.foo);
 }
 

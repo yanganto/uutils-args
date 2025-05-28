@@ -67,14 +67,14 @@ impl Options<Arg> for Settings {
     }
 }
 
-let (settings, operands) = Settings::default().parse(["test"]).unwrap();
+let (settings, _bin_path, operands) = Settings::default().parse(["test"]).unwrap();
 assert!(!settings.force);
 assert_eq!(operands, Vec::<OsString>::new());
 
-let (settings, operands) = Settings::default().parse(["test", "-f"]).unwrap();
+let (settings, _bin_path, operands) = Settings::default().parse(["test", "-f"]).unwrap();
 assert!(settings.force);
 
-let (settings, operands) = Settings::default().parse(["test", "foo"]).unwrap();
+let (settings, _bin_path, operands) = Settings::default().parse(["test", "foo"]).unwrap();
 assert!(!settings.force);
 assert_eq!(operands, vec![OsString::from("foo")]);
 ```
@@ -110,15 +110,15 @@ impl Options<Arg> for Settings {
     }
 }
 
-let (settings, operands) = Settings::default().parse(["test"]).unwrap();
+let (settings, _bin_path, operands) = Settings::default().parse(["test"]).unwrap();
 assert!(!settings.force);
 assert_eq!(operands, Vec::<OsString>::new());
 
-let (settings, operands) = Settings::default().parse(["test", "-f", "some-operand"]).unwrap();
+let (settings, _bin_path, operands) = Settings::default().parse(["test", "-f", "some-operand"]).unwrap();
 assert!(settings.force);
 assert_eq!(operands, vec!["some-operand"]);
 
-let (settings, operands) = Settings::default().parse(["test", "-f", "-F", "some-other-operand"]).unwrap();
+let (settings, _bin_path, operands) = Settings::default().parse(["test", "-f", "-F", "some-other-operand"]).unwrap();
 assert!(!settings.force);
 assert_eq!(operands, vec!["some-other-operand"]);
 ```

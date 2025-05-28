@@ -26,7 +26,7 @@ fn timeout_like() {
         }
     }
 
-    let (settings, command) = Settings::default()
+    let (settings, _bin_path, command) = Settings::default()
         .parse(["timeout", "-v", "10", "foo", "-v"])
         .unwrap();
 
@@ -40,7 +40,7 @@ fn timeout_like() {
         ]
     );
 
-    let (settings, command) = Settings::default()
+    let (settings, _bin_path, command) = Settings::default()
         .parse(["timeout", "10", "foo", "-v"])
         .unwrap();
 
@@ -54,7 +54,7 @@ fn timeout_like() {
         ]
     );
 
-    let (settings, command) = Settings::default()
+    let (settings, _bin_path, command) = Settings::default()
         .parse(["timeout", "--", "10", "-v"])
         .unwrap();
 

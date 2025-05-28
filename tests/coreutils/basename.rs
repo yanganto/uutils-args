@@ -40,7 +40,7 @@ impl Options<Arg> for Settings {
 }
 
 fn parse(args: &[&str]) -> Result<Settings, uutils_args::Error> {
-    let (mut settings, operands) = Settings::default().parse(args)?;
+    let (mut settings, _bin_path, operands) = Settings::default().parse(args)?;
 
     if settings.multiple {
         let names = Many1("FILE").unpack(operands)?;

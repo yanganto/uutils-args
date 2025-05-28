@@ -58,7 +58,7 @@ where
     I: IntoIterator,
     I::Item: Into<OsString>,
 {
-    let (s, ops) = Settings::default().parse(args)?;
+    let (s, _bin_path, ops) = Settings::default().parse(args)?;
     let file = Opt("FILE").unpack(ops)?;
     Ok((s, file))
 }
