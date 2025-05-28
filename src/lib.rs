@@ -164,7 +164,7 @@ impl<T: Arguments> ArgumentIter<T> {
     }
 
     pub fn bin_path(&self) -> Option<PathBuf> {
-        self.parser.bin_name().map(|s| PathBuf::from(s))
+        self.parser.bin_name().map(PathBuf::from)
     }
 }
 
