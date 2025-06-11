@@ -279,7 +279,9 @@ where
 {
     match parse_deprecated(iter.clone()) {
         Some(s) => Ok((s.0, None, s.1)),
-        None => Settings::default().parse(iter),
+        None => Settings::default()
+            .parse(iter)
+            .map(|p| (p.settings, p.bin_path, p.operands)),
     }
 }
 

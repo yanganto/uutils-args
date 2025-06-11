@@ -114,6 +114,21 @@ struct ArgumentIter<T: Arguments> {
     t: PhantomData<T>,
 }
 
+/// A parsed settings with bin_path and operands from arguments.
+pub struct Parsed<S> {
+    pub bin_path: Option<PathBuf>,
+    pub operands: Vec<OsString>,
+    pub settings: S,
+}
+
+impl<S> Parsed<S> {
+    /// A parsed settings without bin_pathand operands
+    pub fn trim(self) -> S {
+        let Self { settings, .. } = self;
+        settings
+    }
+}
+
 impl<T: Arguments> ArgumentIter<T> {
     fn from_args<I>(args: I) -> Self
     where
@@ -184,7 +199,7 @@ pub trait Options<Arg: Arguments>: Sized {
 
     /// Parse an iterator of arguments into the options
     #[allow(unused_mut)]
-    fn parse<I>(mut self, args: I) -> Result<(Self, Option<PathBuf>, Vec<OsString>), Error>
+    fn parse<I>(mut self, args: I) -> Result<Parsed<Self>, Error>
     where
         I: IntoIterator,
         I::Item: Into<OsString>,
@@ -207,7 +222,11 @@ pub trait Options<Arg: Arguments>: Sized {
             while let Some(arg) = iter.next_arg()? {
                 self.apply(arg)?;
             }
-            Ok((self, iter.bin_path(), iter.positional_arguments))
+            Ok(Parsed::<Self> {
+                bin_path: iter.bin_path(),
+                operands: iter.positional_arguments,
+                settings: self,
+            })
         }
     }
 
