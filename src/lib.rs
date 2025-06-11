@@ -122,7 +122,7 @@ pub struct Parsed<S> {
 }
 
 impl<S> Parsed<S> {
-    /// A parsed settings without bin_pathand operands
+    /// A parsed settings without bin_path and operands
     pub fn trim(self) -> S {
         let Self { settings, .. } = self;
         settings
